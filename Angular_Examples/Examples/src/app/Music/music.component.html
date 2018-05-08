@@ -1,0 +1,25 @@
+
+<h1>Music List</h1>
+
+<div>
+  <ul *ngFor="let music of musicData">
+    
+    <li>{{music._id}}</li>
+    <span class="label">list of artists:</span>
+    <ul *ngFor="let artist of music.artists">
+      <li>{{artist.id}}</li>
+      <li>{{artist.name}}</li>
+      <li>{{artist.cover}}</li>
+      <li>{{artist.bio}}</li>
+      <li>{{artist.genre}}</li>
+      <span class="label">list of albums:</span>
+      <ul *ngFor="let albums of artist.albums">
+        <li>{{albums.albumId}}</li>
+        <li>{{albums.title}}</li>
+        <li>{{albums.year}}</li>
+        <li>{{albums.cover}}</li>
+        <li>{{albums.price}}</li>
+      </ul>
+    </ul>
+  </ul>
+</div>

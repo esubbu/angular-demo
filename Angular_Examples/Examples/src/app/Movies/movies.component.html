@@ -1,0 +1,68 @@
+<div>
+  <h1><u>{{title}}</u></h1>
+</div>
+
+<div>
+  
+    <div class="row">
+
+      <div class="col-sm-2">Search Movie :</div> 
+      <input type="text" [(ngModel)]="selectedName" title="search movie name" /><span class="glyphicon glyphicon-search"></span>
+    </div><br />
+          <div class="row">
+            <button class="btn btn-success" (click)="toggleView('list')">List View</button>
+            <button class="btn btn-success" (click)="toggleView('grid')">Grid View</button>
+
+            <button class="btn btn-success" (click)="toggleView('music')">Music View</button>
+          </div>
+
+  <br />
+  <div *ngIf="showMusic">
+    <music-comp></music-comp>
+
+  </div>
+  <br />
+
+    <div *ngIf="showList">
+      <ul *ngFor="let movie of Movies|SearchFilter:selectedName">
+        <li><div><img [src]="movie.imageUrl" /></div></li>
+        <li>{{movie.name}}</li>
+        <li>{{movie.language}}</li>
+        <li><star-comp [rating]="movie.rate" (ratingClicked)="OnDataRecieve($event)"></star-comp></li>
+        <li>{{movie.type}}</li>
+      </ul>
+    </div>
+    
+  <div *ngIf="showGrid">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th><button class="btn btn-success" (click)="toggleImg()">{{showImage?"Hide Image":"Show Image"}}</button></th>
+            <th>Movie Name</th>
+            <th>Language</th>
+            <th>Rate</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let movie of Movies|SearchFilter:selectedName">
+            <td><div *ngIf="showImage"><img [src]="movie.imageUrl" /></div></td>
+            <td>{{movie.name}}</td>
+            <td>{{movie.language}}</td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-success progress-bar-striped " role="progressbar" [attr.aria-valuenow]="movie.rate" aria-valuemin="0" aria-valuemax="5" [style.width]="(movie.rate/5*100)+ '%'">
+                  {{movie.rate}}
+                </div>
+              </div>
+              <star-comp [rating]="movie.rate" (ratingClicked)="OnDataRecieve($event)"></star-comp>
+
+            </td>
+            <td>{{movie.type}}</td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+</div>
